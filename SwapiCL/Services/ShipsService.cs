@@ -7,67 +7,35 @@ namespace SwapiCL.Services
 {
     public static class ShipsService
     {
-        public static async System.Threading.Tasks.Task<RootObject> GetStarShipsAsync()
+        public static RootObject<StarShip> Get()
         {
-            var _ships = new RootObject();
-
-            try
+            using (var ships = BaseService<StarShip>.GetAsync())
             {
-                using (var client = new HttpClient())
+                try
                 {
-                    var uri = SWApiResources.Starships1;
-
-                    var response = await client.GetAsync(uri);
-
-                    if (response.IsSuccessStatusCode)
+                    foreach (var item in ships.Result.results)
                     {
-                        var ships = await response.Content.ReadAsStringAsync();
-                        _ships = JsonConvert.DeserializeObject<RootObject>(ships);
+                        int.TryParse(item.MGLT, out var vMglt);
 
-                        var next = _ships.next;
+                        var vAutonomy = Utils.GetAuthonomyByShip(item);
 
-                        while (!string.IsNullOrEmpty(next))
+                        if (vAutonomy > 0 && vMglt > 0)
                         {
-                            // Check if there is more result page 
-                            response = await client.GetAsync(next);
-
-                            if (!response.IsSuccessStatusCode) continue;
-                            ships = await response.Content.ReadAsStringAsync();
-                            var rootPage = JsonConvert.DeserializeObject<RootObject>(ships);
-
-                            _ships.results.AddRange(rootPage.results);
-
-                            next = rootPage.next;
+                            item.autonomy = Convert.ToInt32(vMglt * vAutonomy);
                         }
-
-                        foreach (var item in _ships.results)
+                        else
                         {
-                            int.TryParse(item.MGLT, out var vMGLT);
-
-                            var vAutonomy = Utils.GetAuthonomyByShip(item);
-
-                            if (vAutonomy > 0 && vMGLT > 0)
-                            {
-                                item.autonomy = Convert.ToInt32(vMGLT * vAutonomy);
-                            }
-                            else
-                            {
-                                item.autonomy = null;
-                            }
+                            item.autonomy = null;
                         }
                     }
-                    else
-                        throw new Exception("Could not load StarShips, it looks like there is not an active internet connection.");
-                }
 
-                return _ships;
+                    return ships.Result;
+                }
+                catch (Exception)
+                {
+                    throw new System.Net.Http.HttpRequestException();
+                }
             }
-            catch (Exception)
-            {
-                throw new System.Net.Http.HttpRequestException();
-            }
-            
         }
     }
-
 }

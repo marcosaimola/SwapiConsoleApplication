@@ -76,7 +76,7 @@ namespace SwapiTest
         [TestMethod]
         public async System.Threading.Tasks.Task TestApiAvailabilityApiAsync()
         {
-            var root = await ShipsService.GetStarShipsAsync();
+            var root = ShipsService.Get();
             Assert.AreEqual(37, root.results.Count);
         }
         

@@ -1,16 +1,14 @@
 ﻿using SwapiCL;
-using SwapiCL.Model;
 using SwapiCL.Services;
 using System;
-using System.Threading.Tasks;
 
 namespace SwapiConsole
 {
-    class Program
+    internal class Program
     {
-        static async Task GetShips()
+        private static void GetShips()
         {
-            RootObject root = await ShipsService.GetStarShipsAsync();
+            var root = ShipsService.Get();
 
             #region StarWarsLogo
             Console.ForegroundColor = ConsoleColor.DarkBlue;
@@ -46,15 +44,15 @@ namespace SwapiConsole
             #endregion
 
             Console.Write("Please enter a distance in mega lights (MGLT): ");
-            string input = "";
+            var input = "";
 
             while (Utils.InputValidDade(input = Console.ReadLine()))
             {
-                foreach (var StarShip in root.results)
+                foreach (var starShip in root.results)
                 {
-                    Console.Write(StarShip.name);
-
-                    if (StarShip.autonomy == null)
+                    Console.Write(starShip.name);
+                    
+                    if (starShip.autonomy == null)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write(" - unknown");
@@ -62,12 +60,9 @@ namespace SwapiConsole
                     }
                     else
                     {
-                        int autonomy = Utils.CalculateShipStop(input, StarShip);
-                        if (autonomy == 0)
-                            Console.ForegroundColor = ConsoleColor.Green;
-                        else
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                        
+                        var autonomy = Utils.CalculateShipStop(input, starShip);
+                        Console.ForegroundColor = autonomy == 0 ? ConsoleColor.Green : ConsoleColor.Yellow;
+
                         Console.Write(" - " + autonomy.ToString());
                         Console.ResetColor();
                     }
@@ -81,15 +76,15 @@ namespace SwapiConsole
                 Console.Write("Please enter a distance in mega lights (MGLT): ");
 
             }
-            
+
             Console.Read();
         }
 
-        static void Main()
+        private static void Main()
         {
             try
             {
-                GetShips().GetAwaiter().GetResult();
+                GetShips();
             }
             catch (Exception ex)
             {

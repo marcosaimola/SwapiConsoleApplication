@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SwapiCL.Model
 {
-    public class StarShip: BaseModel
+    public class VehiclesModel: BaseModel
     {
         public string name { get; set; }
         public string model { get; set; }
@@ -16,11 +16,8 @@ namespace SwapiCL.Model
         public string passengers { get; set; }
         public string cargo_capacity { get; set; }
         public string consumables { get; set; }
-        public string hyperdrive_rating { get; set; }
-        public string MGLT { get; set; }
-        public string starship_class { get; set; }
-        public List<string> pilots { get; set; }
+        public string vehicle_class { get; set; }
+        public List<object> pilots { get; set; }
         public List<string> films { get; set; }
-        public int? autonomy { get; set; }
     }
 }
