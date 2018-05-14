@@ -6,7 +6,7 @@ using SwapiCL.Model;
 
 namespace SwapiConsole
 {
-    internal class Program : ICallObject<StarShip>
+    internal class Program
     {
         private static void GetShips()
         {
