@@ -12,9 +12,7 @@ namespace SwapiCL.Services
         {
             try
             {
-                // You can implement some specifics responsibilities here
-
-                var root = await BaseService<SpeciesModel>.GetAsync();
+                var root = await BaseService<SpeciesModel>.GetAsync(SwApiResources.Species);
                 return root;
             }
             catch (Exception)

@@ -8,17 +8,15 @@ namespace SwapiCL.Services
     public static class BaseService<T>
     {
         // I am using generic methods to simplify the code implementation 
-        public static async System.Threading.Tasks.Task<RootObject<T>> GetAsync()
+        public static async System.Threading.Tasks.Task<RootObject<T>> GetAsync(string pUri)
         {
             try
             {
-                RootObject<T> rootObject;
+                RootObject<T> rootObject = null;
 
                 using (var client = new HttpClient())
                 {
-                    var uri = SwApiResources.Starships;
-
-                    var response = await client.GetAsync(uri);
+                    var response = await client.GetAsync(pUri);
 
                     if (response.IsSuccessStatusCode)
                     {

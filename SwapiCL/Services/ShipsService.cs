@@ -9,7 +9,7 @@ namespace SwapiCL.Services
     {
         public static RootObject<StarShip> Get()
         {
-            using (var ships = BaseService<StarShip>.GetAsync())
+            using (var ships = BaseService<StarShip>.GetAsync(SwApiResources.Starships))
             {
                 try
                 {

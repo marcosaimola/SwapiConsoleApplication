@@ -11,7 +11,7 @@ namespace SwapiCL.Services
             {
                 // You can implement some specifics responsibilities here that's the reason why I injected a specific Object
 
-                var root = await BaseService<PlanetsModel>.GetAsync();
+                var root = await BaseService<PlanetsModel>.GetAsync(SwApiResources.People);
                 return root;
             }
             catch (Exception)

@@ -9,5 +9,6 @@ namespace SwapiCL.Model
         public DateTime created { get; set; }
         public DateTime edited { get; set; }
         public string url { get; set; }
+        public string uriApi { get; set; }
     }
 }

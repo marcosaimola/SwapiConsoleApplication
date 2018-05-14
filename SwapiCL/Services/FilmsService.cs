@@ -11,7 +11,7 @@ namespace SwapiCL.Services
             {
                 // You can implement some specifics responsibilities here that's the reason why I injected a specific Object
 
-                var root = await BaseService<FilmsModel>.GetAsync();
+                var root = await BaseService<FilmsModel>.GetAsync(SwApiResources.Films);
                 return root;
             }
             catch (Exception)

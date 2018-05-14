@@ -54,5 +54,6 @@ namespace SwapiCL
             long.TryParse(input, out var ret);
             return (ret > 0);
         }
+
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.CodeDom;
+using System.Collections.Generic;
 using System.Net.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SwapiCL;
@@ -74,12 +76,12 @@ namespace SwapiTest
         }
 
         [TestMethod]
-        public async System.Threading.Tasks.Task TestApiAvailabilityApiAsync()
+        public void TestApiAvailabilityApi()
         {
             var root = ShipsService.Get();
-            Assert.AreEqual(37, root.results.Count);
+            Assert.IsTrue(root.results.Count > 0);
         }
-        
+
         [TestMethod]
         public void TestCalculateShipStop()
         {
@@ -93,6 +95,36 @@ namespace SwapiTest
         {
             _ss.autonomy = 0;
             Utils.CalculateShipStop("1000000", _ss);
+        }
+
+        [TestMethod]
+        public void TestCallPeopleApi()
+        {
+            Assert.IsTrue(PeopleService.GetAsync().Result.count > 0); 
+        }
+
+        [TestMethod]
+        public void TestCallVehiclesApi()
+        {
+            Assert.IsTrue(VehiclesService.GetAsync().Result.count > 0);
+        }
+
+        [TestMethod]
+        public void TestCallFilmsApi()
+        {
+            Assert.IsTrue(FilmsService.GetAsync().Result.count > 0);
+        }
+
+        [TestMethod]
+        public void TestCallSpeciesApi()
+        {
+            Assert.IsTrue(SpeciesService.GetAsync().Result.count > 0);
+        }
+
+        [TestMethod]
+        public void TestCallPlanetsApi()
+        {
+            Assert.IsTrue(PlanetsService.GetAsync().Result.count > 0);
         }
     }
 }

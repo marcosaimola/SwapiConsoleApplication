@@ -1,10 +1,12 @@
 ﻿using SwapiCL;
 using SwapiCL.Services;
 using System;
+using System.Collections.Generic;
+using SwapiCL.Model;
 
 namespace SwapiConsole
 {
-    internal class Program
+    internal class Program : ICallObject<StarShip>
     {
         private static void GetShips()
         {
@@ -91,6 +93,11 @@ namespace SwapiConsole
 ;               Console.WriteLine(ex.Message);
                 Console.ReadKey();
             }
+        }
+
+        public List<StarShip> Get()
+        {
+            throw new NotImplementedException();
         }
     }
 }
